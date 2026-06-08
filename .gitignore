@@ -1,0 +1,17 @@
+data/site-data.json
+node_modules/
+.DS_Store
+*.log
+
+# 本地原始素材库，不作为部署代码提交
+/球员照片/
+/影像素材/
+/球队名单.xlsx
+
+# 大视频单独上传到服务器或对象存储，避免 Git 仓库过大
+/public/assets/**/*.mp4
+/public/assets/**/*.mov
+/public/assets/**/*.webm
+
+# 后台运行时上传目录，线上由服务器自己维护
+/public/assets/uploads/
