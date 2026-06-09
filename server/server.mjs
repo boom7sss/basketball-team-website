@@ -453,6 +453,10 @@ if (isDirectRun) {
   const app = createApp({ dataStore, adminPassword: process.env.ADMIN_PASSWORD });
   app.listen(port, () => {
     console.log(`College basketball website running at http://localhost:${port}`);
-    console.log("Default admin password: team-admin-2026");
+    if (process.env.ADMIN_PASSWORD) {
+      console.log("Admin password loaded from ADMIN_PASSWORD.");
+    } else {
+      console.log("Using default local admin password: team-admin-2026");
+    }
   });
 }

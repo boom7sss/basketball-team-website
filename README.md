@@ -40,7 +40,7 @@ team-admin-2026
 - 数据：JSON 文件
 - 图片处理：sharp
 - 测试：Node.js 内置 test runner
-- 构建：当前无独立打包构建步骤
+- 构建：当前无前端打包步骤，`npm run build` 用于上线前数据和脚本检查
 
 ## 项目文档
 
@@ -55,6 +55,7 @@ public/                  # 前台、后台和网站公开素材
 server/                  # Node 服务端和数据逻辑
 data/site-data.json      # 本地运行时真实内容
 data/site-data.seed.json # 上线首版初始内容快照
+scripts/build-check.mjs  # 上线前构建检查
 tests/                   # 自动检查
 球员照片                  # 原始球员照片素材库
 影像素材                  # 原始影像素材库
@@ -93,6 +94,12 @@ public/assets
 
 ## 检查
 
+上线前构建检查：
+
+```powershell
+npm run build
+```
+
 运行全部测试：
 
 ```powershell
@@ -108,6 +115,7 @@ npm test
 ## 当前需注意
 
 - 视频素材仍然较大，后续可做按需加载、压缩或对象存储。
-- 导航和影像中心板块结构仍写在 `public/app.js`，不是后台字段。
+- 顶部导航、影像中心大板块和比赛照片/视频子板块已经迁移到 `data/site-data.json` / `data/site-data.seed.json`；`public/app.js` 保留兜底默认值。
+- 后台栏目、后台字段配置和新增条目的默认内容仍在 `public/app.js`，不建议交给普通内容负责人直接修改。
 - 当前后台是单管理员密码，没有多账号权限系统。
-- 报名记录只能后台查看，不会自动发送通知。
+- 报名记录只能后台查看，不会自动发送通知；上线前建议安排负责人固定检查后台。

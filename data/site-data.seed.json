@@ -112,6 +112,100 @@
       "eyebrow": ""
     }
   },
+  "navigation": [
+    {
+      "path": "/",
+      "label": "首页"
+    },
+    {
+      "path": "/team",
+      "label": "球队"
+    },
+    {
+      "path": "/matches",
+      "label": "赛程战绩"
+    },
+    {
+      "path": "/news",
+      "label": "新闻"
+    },
+    {
+      "path": "/roster",
+      "label": "队员"
+    },
+    {
+      "path": "/gallery",
+      "label": "影像"
+    },
+    {
+      "path": "/recruit",
+      "label": "加入我们"
+    },
+    {
+      "path": "/sponsors",
+      "label": "赞助合作"
+    },
+    {
+      "path": "/contact",
+      "label": "联系"
+    }
+  ],
+  "gallerySections": [
+    {
+      "slug": "highlights",
+      "path": "/gallery/highlights",
+      "title": "比赛集锦",
+      "intro": "关键回合、进攻片段和比赛高光。",
+      "accent": "HIGHLIGHTS",
+      "cover": "/assets/gallery/highlights/photos/highlight-photo-1.webp"
+    },
+    {
+      "slug": "team-photos",
+      "path": "/gallery/team-photos",
+      "title": "赛后合照",
+      "intro": "每一场结束后的队伍合影和纪念瞬间。",
+      "accent": "TEAM PHOTO",
+      "cover": "/assets/gallery/team-photos/team-photo-1.webp"
+    },
+    {
+      "slug": "training",
+      "path": "/gallery/training",
+      "title": "日常训练",
+      "intro": "投篮、对抗、体能和战术训练记录。",
+      "accent": "TRAINING",
+      "cover": "/assets/gallery/training/training-photo-1.webp"
+    },
+    {
+      "slug": "life",
+      "path": "/gallery/life",
+      "title": "球队生活",
+      "intro": "场下日常、团建、出行和队伍故事。",
+      "accent": "LIFE",
+      "cover": "/assets/gallery/life/life-photo-6.webp"
+    }
+  ],
+  "gallerySubsections": [
+    {
+      "parent": "比赛集锦",
+      "parentSlug": "highlights",
+      "kind": "photo",
+      "path": "/gallery/highlights/photos",
+      "title": "比赛照片",
+      "intro": "比赛现场照片、关键瞬间和场边记录。",
+      "accent": "PHOTOS",
+      "cover": "/assets/gallery/highlights/photos/highlight-photo-1.webp"
+    },
+    {
+      "parent": "比赛集锦",
+      "parentSlug": "highlights",
+      "kind": "video",
+      "path": "/gallery/highlights/videos",
+      "title": "比赛视频",
+      "intro": "比赛片段、进攻回合和短视频素材。",
+      "accent": "VIDEOS",
+      "cover": "/assets/gallery/highlights/videos/highlight-video-1.mp4"
+    }
+  ],
   "matches": [
     {
       "id": "match-1",
@@ -1399,7 +1493,7 @@
       }
     ],
     "contactLabel": "招新咨询",
-    "contactValue": "请联系球队管理组或扫描后续发布的报名二维码"
+    "contactValue": "请加入招新QQ群：待填写，入群备注“姓名+年级+专业”。"
   },
   "applications": []
 }

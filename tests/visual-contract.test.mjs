@@ -249,8 +249,10 @@ test("gallery is organized into four clickable media sections with detail pages"
     [1, 2, 3, 4, 5, 6].map((index) => stat(`public/assets/gallery/life/life-photo-${index}.webp`))
   );
 
-  assert.match(js, /const gallerySections = \[/);
-  assert.match(js, /const gallerySubsections = /);
+  assert.match(js, /const fallbackGallerySections = \[/);
+  assert.match(js, /const fallbackGallerySubsections = /);
+  assert.match(js, /state\.data\?\.gallerySections/);
+  assert.match(js, /state\.data\?\.gallerySubsections/);
   assert.match(js, /cover:\s*"\/assets\/gallery\/highlights\/photos\/highlight-photo-1\.webp"/);
   assert.match(js, /cover:\s*"\/assets\/gallery\/team-photos\/team-photo-1\.webp"/);
   assert.match(js, /cover:\s*"\/assets\/gallery\/training\/training-photo-1\.webp"/);
@@ -454,6 +456,14 @@ test("recruitment page has separate player and operation application flows", asy
   assert.match(js, /data-recruitment-form/);
   assert.match(js, /球员报名/);
   assert.match(js, /运营报名/);
+  assert.match(js, /function\s+applicationSuccessMessage/);
+  assert.match(js, /function\s+applicationSuccessDialog/);
+  assert.match(js, /applicationSubmitted/);
+  assert.match(js, /recruitment\?\.contactValue/);
+  assert.match(js, /报名已提交成功/);
+  assert.match(js, /招新QQ群/);
+  assert.match(js, /role="alertdialog"/);
+  assert.match(js, /data-close-application-success/);
   assert.match(js, /applicationTypeButton\("player"/);
   assert.match(js, /applicationTypeButton\("operation"/);
   assert.match(js, /name="position"/);
@@ -467,7 +477,10 @@ test("recruitment page has separate player and operation application flows", asy
   assert.doesNotMatch(js, /每周可投入时间/);
   assert.match(css, /\.application-form/s);
   assert.match(css, /\.application-type-toggle/s);
+  assert.match(css, /\.application-success-overlay/s);
+  assert.match(css, /\.application-success-dialog/s);
   assert.match(css, /\.application-admin-card/s);
+  assert.match(css, /\.status\s*{[^}]*white-space:\s*pre-line/s);
 });
 
 test("homepage hero does not render the right-side media or next-match panel", async () => {

@@ -44,13 +44,14 @@ npm start
 
 ## 构建说明
 
-当前项目没有独立的前端构建步骤，没有 Vite、Webpack 或 Next.js。部署时需要的核心内容就是：
+当前项目没有独立的前端打包步骤，没有 Vite、Webpack 或 Next.js。`npm run build` 是上线前数据和脚本检查，不会生成新的打包目录。部署时需要的核心内容就是：
 
 ```text
 public/
 server/
 data/site-data.seed.json
 package.json
+package-lock.json
 ```
 
 运行时会生成或读取：
@@ -60,6 +61,12 @@ data/site-data.json
 ```
 
 ## 测试
+
+运行上线前构建检查：
+
+```powershell
+npm run build
+```
 
 运行全部检查：
 
@@ -89,15 +96,23 @@ npm test
 2. 确认 `public/assets` 内素材已经是部署版素材。
 3. 不建议部署 `球员照片` 和 `影像素材` 原始素材库。
 4. 设置正式后台密码和会话密钥。
+5. 确认 `package-lock.json` 已随代码提交，用于锁定 npm 依赖版本。
 
-建议环境变量：
+上线必须配置的环境变量：
+
+```text
+ADMIN_PASSWORD=换成正式后台密码
+SESSION_SECRET=换成一串较长随机字符串
+```
+
+可选环境变量：
 
 ```text
 PORT=3000
-ADMIN_PASSWORD=换成正式后台密码
-SESSION_SECRET=换成一串较长随机字符串
 DATA_FILE=./data/site-data.json
 ```
+
+不要把真实 `ADMIN_PASSWORD` 或真实 `SESSION_SECRET` 写进 Git 仓库、代码、README、部署文档或公开聊天记录。它们应该只存在于服务器环境变量、服务器面板或进程管理工具配置里。
 
 ## 普通云服务器部署思路
 
@@ -109,6 +124,8 @@ DATA_FILE=./data/site-data.json
 
 ```bash
 npm install
+npm run build
+npm test
 npm start
 ```
 
@@ -155,8 +172,14 @@ data/site-data.seed.json
 
 - 图片继续通过后台上传，上传后会自动转 WebP。
 - 视频可以先保持 mp4。
+- 视频文件没有被 Git 跟踪，需要单独上传到服务器对应路径。
+- 比赛视频上传到 `public/assets/gallery/highlights/videos`。
+- 日常训练视频上传到 `public/assets/gallery/training`。
+- 球队生活视频上传到 `public/assets/gallery/life`。
 - 如果服务器空间或访问速度压力较大，再考虑视频压缩或使用对象存储/CDN。
 - 不要把原始素材库一起部署，除非服务器也承担素材归档任务。
+
+如果服务器上缺少视频文件，页面仍会打开，但对应视频无法播放。
 
 ## 常见问题
 

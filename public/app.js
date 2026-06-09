@@ -1,18 +1,18 @@
 const app = document.querySelector("#app");
 
-const navItems = [
-  ["/", "首页"],
-  ["/team", "球队"],
-  ["/matches", "赛程战绩"],
-  ["/news", "新闻"],
-  ["/roster", "队员"],
-  ["/gallery", "影像"],
-  ["/recruit", "加入我们"],
-  ["/sponsors", "赞助合作"],
-  ["/contact", "联系"]
+const fallbackNavigation = [
+  { path: "/", label: "首页" },
+  { path: "/team", label: "球队" },
+  { path: "/matches", label: "赛程战绩" },
+  { path: "/news", label: "新闻" },
+  { path: "/roster", label: "队员" },
+  { path: "/gallery", label: "影像" },
+  { path: "/recruit", label: "加入我们" },
+  { path: "/sponsors", label: "赞助合作" },
+  { path: "/contact", label: "联系" }
 ];
 
-const gallerySections = [
+const fallbackGallerySections = [
   {
     slug: "highlights",
     path: "/gallery/highlights",
@@ -47,9 +47,10 @@ const gallerySections = [
   }
 ];
 
-const gallerySubsections = [
+const fallbackGallerySubsections = [
   {
     parent: "比赛集锦",
+    parentSlug: "highlights",
     kind: "photo",
     path: "/gallery/highlights/photos",
     title: "比赛照片",
@@ -59,6 +60,7 @@ const gallerySubsections = [
   },
   {
     parent: "比赛集锦",
+    parentSlug: "highlights",
     kind: "video",
     path: "/gallery/highlights/videos",
     title: "比赛视频",
@@ -81,7 +83,7 @@ const adminTabs = [
   ["applications", "报名管理"]
 ];
 
-const pageDefinitions = [
+const pageDefinitionDefaults = [
   ["team", "球队页面", "球队档案", "用团队回应每一次哨声", ""],
   ["matches", "赛程战绩", "赛程与战绩", "未来赛程、历史比分和比赛摘要，让每一次上场都有记录。", ""],
   ["news", "新闻页面", "新闻动态", "比赛战报、训练日常、招新公告和团队故事。", ""],
@@ -124,6 +126,7 @@ const state = {
   adminDraft: null,
   adminTab: "team",
   applicationType: "player",
+  applicationSubmitted: false,
   applications: null,
   applicationsLoading: false,
   message: "",
@@ -298,6 +301,53 @@ function mediaPath(value) {
   return String(value || "").trim().replaceAll("\\", "/");
 }
 
+function lineBreakText(value) {
+  return String(value || "")
+    .split(/\n+/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .join("\n");
+}
+
+function applicationSuccessMessage() {
+  const contactValue = lineBreakText(state.data?.recruitment?.contactValue);
+  const contactText = contactValue || "请加入招新QQ群：待填写，入群备注“姓名+年级+专业”。";
+  return `报名已提交成功！\n\n${contactText}\n\n负责人会在后台查看你的报名信息，并在群里通知试训安排。`;
+}
+
+function configuredList(value, fallback) {
+  return Array.isArray(value) && value.length ? value : fallback;
+}
+
+function normalizeNavigationItem(item) {
+  if (Array.isArray(item)) {
+    return { path: item[0], label: item[1] };
+  }
+  return item || {};
+}
+
+function navigationItems() {
+  return configuredList(state.data?.navigation, fallbackNavigation)
+    .map(normalizeNavigationItem)
+    .filter((item) => item.path && item.label);
+}
+
+function gallerySections() {
+  return configuredList(state.data?.gallerySections, fallbackGallerySections).filter(
+    (item) => item.slug && item.path && item.title
+  );
+}
+
+function gallerySubsections() {
+  return configuredList(state.data?.gallerySubsections, fallbackGallerySubsections).filter(
+    (item) => item.path && item.title && item.kind
+  );
+}
+
+function pageDefinitions() {
+  return pageDefinitionDefaults;
+}
+
 function formatApplicationTime(value) {
   if (!value) return "";
   const date = new Date(value);
@@ -376,10 +426,10 @@ function layout(content) {
             </span>
           </a>
           <nav class="nav">
-            ${navItems
+            ${navigationItems()
               .map(
-                ([href, label]) =>
-                  `<a href="${href}" class="${current === href ? "active" : ""}" data-link>${label}</a>`
+                ({ path: href, label }) =>
+                  `<a href="${escapeHtml(href)}" class="${current === href ? "active" : ""}" data-link>${escapeHtml(label)}</a>`
               )
               .join("")}
             <a href="/admin" class="admin-link ${current === "/admin" ? "active" : ""}" data-link>后台</a>
@@ -801,7 +851,7 @@ function galleryPage() {
     ${pageHero(copy.title, copy.intro, { eyebrow: copy.eyebrow })}
     <section class="section">
       <div class="grid two gallery-section-grid">
-        ${gallerySections.map((section, index) => gallerySectionCard(section, index)).join("")}
+        ${gallerySections().map((section, index) => gallerySectionCard(section, index)).join("")}
       </div>
     </section>
   `);
@@ -809,7 +859,9 @@ function galleryPage() {
 
 function gallerySectionPage(section) {
   if (section.slug === "highlights") {
-    const subsections = gallerySubsections.filter((item) => item.parent === section.title);
+    const subsections = gallerySubsections().filter((item) =>
+      item.parentSlug ? item.parentSlug === section.slug : item.parent === section.title
+    );
     return layout(`
       ${pageHero(section.title, section.intro)}
       <section class="section">
@@ -1028,6 +1080,23 @@ function recruitmentApplicationForm() {
         <span class="muted">提交后负责人会在后台看到你的信息。</span>
       </div>
     </form>
+    ${state.applicationSubmitted ? applicationSuccessDialog() : ""}
+  `;
+}
+
+function applicationSuccessDialog() {
+  return `
+    <div class="application-success-overlay" role="alertdialog" aria-modal="true" aria-labelledby="application-success-title">
+      <div class="application-success-dialog">
+        <span class="application-success-mark">OK</span>
+        <h2 id="application-success-title">报名已提交成功</h2>
+        <p>${escapeHtml(applicationSuccessMessage())}</p>
+        <div class="button-row">
+          <button class="btn primary" type="button" data-close-application-success>我知道了</button>
+          <a class="btn soft" href="/contact" data-link>查看联系方式</a>
+        </div>
+      </div>
+    </div>
   `;
 }
 
@@ -1167,7 +1236,7 @@ function loginPage() {
         <h1>球队后台</h1>
         <p class="muted">队内管理员登录后可以维护赛程、新闻、队员、影像和赞助商内容。</p>
         ${state.error ? `<div class="status error">${escapeHtml(state.error)}</div>` : ""}
-        <div class="field"><label>后台密码</label><input name="password" type="password" autocomplete="current-password" placeholder="默认 team-admin-2026" /></div>
+        <div class="field"><label>后台密码</label><input name="password" type="password" autocomplete="current-password" placeholder="请输入后台密码" /></div>
         <div class="button-row"><button class="btn dark" type="submit">登录后台</button><a class="btn soft" href="/" data-link>返回官网</a></div>
       </form>
     </main>
@@ -1355,7 +1424,7 @@ function renderTeamEditor() {
 
 function ensureDraftPages() {
   if (!state.adminDraft.pages) state.adminDraft.pages = {};
-  pageDefinitions.forEach(([key, , title, intro, eyebrow]) => {
+  pageDefinitions().forEach(([key, , title, intro, eyebrow]) => {
     if (!state.adminDraft.pages[key]) {
       state.adminDraft.pages[key] = { title, intro, eyebrow };
     }
@@ -1373,7 +1442,7 @@ function renderPagesEditor() {
   ensureDraftPages();
   return `
     <div class="admin-actions"><h2>页面文案</h2><p class="muted">管理各页面顶部的大标题和说明文字。</p></div>
-    ${pageDefinitions
+    ${pageDefinitions()
       .map(([key, label]) => {
         const item = state.adminDraft.pages[key];
         return `
@@ -1535,13 +1604,13 @@ function render() {
     return;
   }
   if (path.startsWith("/gallery/")) {
-    const subsection = gallerySubsections.find((item) => item.path === path);
+    const subsection = gallerySubsections().find((item) => item.path === path);
     if (subsection) {
       app.innerHTML = gallerySubsectionPage(subsection);
       prepareMotion();
       return;
     }
-    const section = gallerySections.find((item) => item.path === path);
+    const section = gallerySections().find((item) => item.path === path);
     app.innerHTML = section ? gallerySectionPage(section) : galleryPage();
     prepareMotion();
     return;
@@ -1635,6 +1704,7 @@ async function saveAdminData() {
 async function submitApplication(form) {
   state.error = "";
   state.message = "";
+  state.applicationSubmitted = false;
   const formData = new FormData(form);
   const type = formData.get("type");
   const payload = {
@@ -1667,7 +1737,9 @@ async function submitApplication(form) {
     render();
     return;
   }
-  state.message = "报名已提交，负责人会尽快联系你。";
+  form.reset();
+  state.message = applicationSuccessMessage();
+  state.applicationSubmitted = true;
   state.applications = null;
   render();
 }
@@ -1786,6 +1858,12 @@ document.addEventListener("click", (event) => {
     state.applicationType = applicationType.dataset.applicationType;
     state.message = "";
     state.error = "";
+    state.applicationSubmitted = false;
+    render();
+    return;
+  }
+  if (event.target.closest("[data-close-application-success]")) {
+    state.applicationSubmitted = false;
     render();
     return;
   }

@@ -65,9 +65,23 @@ test("data store initializes with default basketball site content", async () => 
     assert.equal(data.home.stats.actionLabel, "了解球队");
     assert.equal(data.home.news.title, "近期动态");
     assert.equal(data.home.players.title, "队员风采");
+    assert.match(data.recruitment.contactValue, /招新QQ群/);
+    assert.match(data.recruitment.contactValue, /姓名\+年级\+专业/);
+    assert.deepEqual(
+      data.navigation.map((item) => item.label),
+      ["首页", "球队", "赛程战绩", "新闻", "队员", "影像", "加入我们", "赞助合作", "联系"]
+    );
     assert.deepEqual(
       Object.keys(data.pages),
       ["team", "matches", "news", "roster", "gallery", "sponsors", "contact"]
+    );
+    assert.deepEqual(
+      data.gallerySections.map((item) => item.title),
+      ["比赛集锦", "赛后合照", "日常训练", "球队生活"]
+    );
+    assert.deepEqual(
+      data.gallerySubsections.map((item) => item.title),
+      ["比赛照片", "比赛视频"]
     );
     assert.deepEqual(
       [...new Set(data.gallery.map((item) => item.category))],
