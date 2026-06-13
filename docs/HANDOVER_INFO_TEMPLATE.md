@@ -56,7 +56,8 @@ SESSION_SECRET 交接方式：通过可信渠道交接
 训练视频目录：/var/www/basketball-team-website/public/assets/gallery/training
 生活视频目录：/var/www/basketball-team-website/public/assets/gallery/life
 备份文件位置：~/basketball-backups
-最近一次备份：~/basketball-backups/basketball-site-2026-06-13.tar.gz
+最近一次完整备份：~/basketball-backups/basketball-site-2026-06-13.tar.gz
+自动备份文件：~/basketball-backups/basketball-auto-runtime-*.tar.gz
 自动备份说明：docs/BACKUP_AUTOMATION.md
 ```
 
@@ -71,15 +72,18 @@ SESSION_SECRET 交接方式：通过可信渠道交接
 
 ```text
 优化记录文档：docs/OPTIMIZATION_NOTES.md
-占位文案：本地已清理影像页残留占位文案
-favicon：本地已新增 public/favicon.ico，部署到 VPS 后修复 /favicon.ico 404
+视频优化记录：docs/VIDEO_OPTIMIZATION_LOG.md
+自动备份说明：docs/BACKUP_AUTOMATION.md
+占位文案：已清理影像页残留占位文案
+favicon：已部署 public/favicon.ico，/favicon.ico 返回 200
 图片：部署图片均为 WebP，当前无需批量重压
-视频：仍直接放在香港 VPS，最大视频约 213MB，后续建议生成网页播放版
+视频：重点大视频已生成网页播放版并切换，原视频保留
 Nginx 缓存：/assets/ 可缓存，/api/site 不缓存，视频 Range 返回 206
+自动备份：已启用，每天凌晨 3:30 执行
 HTTPS：暂未配置，等待域名或学院二级域名
 ```
 
-后续负责人如果要压缩视频，请保留原视频，只把后台或数据中的播放地址切换到压缩后的网页播放版。不要直接删除原视频。
+后续负责人如果继续处理视频，请保留原视频，只把后台或数据中的播放地址切换到压缩后的网页播放版。不要直接删除原视频。当前已切换的视频详见 `docs/VIDEO_OPTIMIZATION_LOG.md`。
 
 ## 域名和 HTTPS
 
@@ -213,7 +217,7 @@ pm2 logs basketball-team-website --lines 50
 
 ### 视频播放慢
 
-当前视频直接放在香港 VPS 上，受服务器带宽影响。后续可压缩大视频，或迁移到对象存储 / CDN。
+当前视频直接放在香港 VPS 上。重点大视频已压缩并切换到网页播放版；如果后续访问量明显增加，再考虑对象存储 / CDN。
 
 ### 浏览器控制台出现 favicon.ico 404
 

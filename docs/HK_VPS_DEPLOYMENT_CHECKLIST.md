@@ -53,8 +53,12 @@
 [x] 已验证视频 Range 请求返回 206 Partial Content
 [x] 已完成重启后持久化检查
 [x] 已生成首次服务器备份：~/basketball-backups/basketball-site-2026-06-13.tar.gz
-[x] 本地已清理影像页占位文案并补充 favicon.ico，待同步部署到 VPS
+[x] 已清理影像页占位文案并部署 favicon.ico
 [x] 已新增优化记录：docs/OPTIMIZATION_NOTES.md
+[x] 已压缩并切换重点大视频：highlight-video-2、9、11、12、13、14
+[x] 已新增视频优化记录：docs/VIDEO_OPTIMIZATION_LOG.md
+[x] 已新增并启用自动备份脚本：scripts/backup-runtime.sh
+[x] 已新增自动备份说明：docs/BACKUP_AUTOMATION.md
 ```
 
 待继续：
@@ -64,7 +68,7 @@
 [x] 交接信息模板已创建：docs/HANDOVER_INFO_TEMPLATE.md
 [x] 域名与 HTTPS 后续 TODO 已创建：docs/DOMAIN_HTTPS_TODO.md
 [ ] 将交接信息通过可信渠道交给下一任负责人
-[ ] 后续优化：部署 favicon.ico 到 VPS、压缩大视频、购买域名后配置 HTTPS
+[ ] 后续维护：域名到位后配置 HTTPS、定期下载异地备份、稳定观察后决定是否归档/清理原视频
 ```
 
 当前结论：
@@ -126,8 +130,8 @@ Web 入口：Nginx 1.24.0
 ```text
 [ ] 绑定正式域名
 [ ] 配置 HTTPS
-[x] 本地已补 favicon.ico，部署到 VPS 后可消除浏览器控制台 favicon 404
-[ ] 压缩较大的视频文件
+[x] favicon.ico 已部署，消除浏览器控制台 favicon 404
+[x] 较大的重点视频已压缩并切换网页播放版
 [ ] 后续可将视频迁移到 COS / OSS / CDN
 [ ] 将交接信息和密码通过可信渠道交给下一任负责人
 ```
@@ -146,6 +150,7 @@ Web 入口：Nginx 1.24.0
 Nginx 配置：/etc/nginx/sites-available/basketball-team-website
 备份目录：~/basketball-backups
 最近备份：~/basketball-backups/basketball-site-2026-06-13.tar.gz
+自动备份：~/basketball-backups/basketball-auto-runtime-*.tar.gz
 ```
 
 ### pm2 常用命令
@@ -200,11 +205,11 @@ node_modules
 
 ```text
 1. 购买域名或申请学院二级域名，然后配置 HTTPS。
-2. 压缩 highlight-video-12、highlight-video-13、highlight-video-14 等大视频，先生成网页播放版并保留原视频。
-3. 视访问量考虑将视频迁移到 COS / OSS / CDN。
-4. 将本地新增的 public/favicon.ico 同步到 VPS。
+2. 保留原视频一段时间，稳定后下载归档到本地或网盘，再决定是否从服务器清理。
+3. 每月下载一次自动备份到异地位置。
+4. 视访问量考虑将视频迁移到 COS / OSS / CDN。
 5. 后续可为视频增加独立 poster 封面图。
-6. 建立定期备份制度，并把备份下载到本地或网盘。
+6. 如需长期运营，再考虑后台多账号、页面结构文案后台可编辑等功能。
 ```
 
 域名责任建议：
@@ -219,8 +224,8 @@ node_modules
 ### 收尾建议
 
 ```text
-当前部署 Agent 可以到此收尾。
-后续建议新开优化 Agent，专注处理域名 HTTPS、视频压缩、favicon 和备份自动化。
+当前优化阶段可以到此收尾。
+后续 Final Agent 建议只做文档归并和最终交接整理，不建议继续做功能开发。
 ```
 
 ## 阶段 0：提前准备
@@ -705,8 +710,8 @@ sudo certbot renew --dry-run
 当前说明：
 
 ```text
-控制台出现 favicon.ico 404，不影响功能；本地已新增 public/favicon.ico，部署到 VPS 后应消失。
-视频可播放但仍受香港 VPS 20Mbps 带宽影响，后续建议压缩大视频或迁移 COS/OSS/CDN。
+favicon.ico 已部署，浏览器请求 /favicon.ico 返回 200。
+重点大视频已压缩并切换到网页播放版；视频仍受香港 VPS 20Mbps 带宽影响，后续访问量增大时再考虑 COS/OSS/CDN。
 ```
 
 服务器检查：
@@ -806,6 +811,7 @@ GitHub 私钥
 [x] site-data.json 已备份
 [x] public/assets/uploads 已备份
 [x] 视频目录已备份
+[x] 自动备份脚本已启用
 [ ] 视频目录位置已交接
 [ ] GitHub 仓库地址已交接
 [ ] 后台地址已交接
@@ -833,5 +839,6 @@ GitHub 私钥
 [x] 大视频已单独上传
 [x] data/site-data.json 已纳入备份
 [x] public/assets/uploads 已纳入备份
+[x] 自动备份已启用
 [x] 交接信息模板已整理
 ```

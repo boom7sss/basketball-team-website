@@ -1,8 +1,57 @@
 # 线上优化记录
 
-更新时间：2026-06-13
+更新时间：2026-06-14
 
 本文记录香港 VPS 基础部署完成后的性能、交付和上线观感优化。本文不记录真实 `ADMIN_PASSWORD`、`SESSION_SECRET`、服务器登录密码或 SSH 私钥。
+
+## 优化阶段收尾总结
+
+本轮线上优化阶段已收尾。后续 Final Agent 只建议做文档归并、最终交接信息整理和必要的只读核对，不建议继续做功能开发、页面修改或后台逻辑调整。
+
+已完成：
+
+- favicon 修复：`public/favicon.ico` 已部署，线上 `/favicon.ico` 返回 200。
+- 占位文案清理：影像页残留占位说明已替换为正式上线文案。
+- Nginx 静态缓存验证：`/assets/` 图片和视频由 Nginx 直接托管并带缓存头。
+- API 不缓存验证：`/api/site` 返回 `Cache-Control: no-store`。
+- 视频 Range 验证：视频请求返回 `206 Partial Content`，支持分段加载。
+- 大视频压缩并切换：`highlight-video-2`、`9`、`11`、`12`、`13`、`14` 已切换到 `-web.mp4` 网页播放版，原视频保留。
+- 自动备份脚本启用：`scripts/backup-runtime.sh` 已部署，crontab 已配置每日凌晨 3:30 自动执行。
+- 手动备份验证：已成功生成 `basketball-auto-runtime-*.tar.gz` 和 `.sha256` 校验文件。
+- 后台登录、保存、上传验证：均已通过。
+- pm2 在线：`basketball-team-website` 处于 online 状态。
+
+当前未完成但不阻塞使用：
+
+- 域名和 HTTPS：等待学院二级域名或后续长期负责人持有的商业域名，详见 `docs/DOMAIN_HTTPS_TODO.md`。
+- 原视频归档/清理：暂不删除，建议稳定观察后下载到本地或网盘归档，再决定是否从服务器清理。
+- 异地备份：当前自动备份仍在同一台 VPS，建议每月下载一份到本地、网盘或学院资料盘。
+- 后台多账号：当前仍为单管理员密码模式，首版可用，长期运营可再做账号体系。
+- 页面结构文案后台可编辑：如“具体素材”说明仍在 `public/app.js`，不常改，暂不迁移到后台。
+- COS/OSS/CDN：视频压缩后播放体验已改善，暂不迁移。
+- pending kernel upgrade：服务器提示过内核待升级，后续可选择低访问时段重启 VPS，并检查 pm2/Nginx 是否自动恢复。
+
+当前线上状态：
+
+```text
+网站访问：http://43.129.197.63 可访问
+后台：http://43.129.197.63/admin 可访问
+后台登录：已验证正常
+后台保存：已验证正常
+后台上传：已验证正常
+视频播放：已切换的 web 版视频可访问，Range 返回 206
+备份：手动备份验证通过，自动备份 crontab 已启用
+GitHub：最新优化代码和文档已推送
+```
+
+给 Final Agent 的交接摘要：
+
+```text
+当前优化 Agent 已完成上线观感、静态交付、视频播放、备份自动化和交接 TODO 整理。
+已更新 docs/OPTIMIZATION_NOTES.md、docs/VIDEO_OPTIMIZATION_LOG.md、docs/BACKUP_AUTOMATION.md、docs/DOMAIN_HTTPS_TODO.md、docs/HANDOVER_INFO_TEMPLATE.md、docs/HK_VPS_DEPLOYMENT_CHECKLIST.md 等文档。
+Final Agent 接下来只需要做文档归并、最终交接清单整理、敏感信息交接提醒和必要的只读状态核对。
+不建议 Final Agent 继续新增功能、修改页面、重构后台逻辑或做新的线上优化。
+```
 
 ## 本次本地优化
 
