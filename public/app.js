@@ -880,7 +880,7 @@ function gallerySectionPage(section) {
     ${pageHero(section.title, section.intro)}
     <section class="section compact">
       <div class="section-head">
-        <div><h2>具体素材</h2><p>当前先使用占位影像，后续可替换为真实照片或视频链接。</p></div>
+        <div><h2>具体素材</h2><p>当前已接入球队真实训练、比赛和生活影像，后续新增素材会继续归档在这里。</p></div>
         <a class="btn soft" href="/gallery" data-link>返回影像中心</a>
       </div>
       <div class="grid two">${items.map((item, index) => galleryCard(item, index)).join("")}</div>

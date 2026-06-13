@@ -235,6 +235,26 @@ data/site-data.seed.json
 
 如果服务器上缺少视频文件，页面仍会打开，但对应视频无法播放。
 
+## 上线后优化记录
+
+详细记录见：
+
+```text
+docs/OPTIMIZATION_NOTES.md
+```
+
+当前优化结论：
+
+- 前台影像页残留占位文案已在本地清理。
+- `data/site-data.seed.json` 和 `server/defaultData.mjs` 已同步正式影像说明，避免重新初始化后出现临时感文案。
+- 本地已新增 `public/favicon.ico`，部署到 VPS 后可修复 `/favicon.ico` 404。
+- 本地图片均为 WebP，最大图片约 589KB，本轮不批量重压图片。
+- 本地最大视频为 `highlight-video-12.mp4`，约 213MB；建议后续先生成网页播放版，不直接删除原视频。
+- 线上 `/assets/` 已可缓存，`/api/site` 返回 `Cache-Control: no-store`，视频 Range 请求返回 `206 Partial Content`。
+- 当前仍使用 IP 访问，HTTPS 等域名或学院二级域名到位后再配置。
+
+如果要直接修改线上 `data/site-data.json`，必须先备份；优先通过后台改文案并点击“保存全部”，不要用本地 seed 覆盖线上运行时数据。
+
 ## 常见问题
 
 ### 刷新后页面仍然旧

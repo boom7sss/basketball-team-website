@@ -53,6 +53,8 @@
 [x] 已验证视频 Range 请求返回 206 Partial Content
 [x] 已完成重启后持久化检查
 [x] 已生成首次服务器备份：~/basketball-backups/basketball-site-2026-06-13.tar.gz
+[x] 本地已清理影像页占位文案并补充 favicon.ico，待同步部署到 VPS
+[x] 已新增优化记录：docs/OPTIMIZATION_NOTES.md
 ```
 
 待继续：
@@ -61,7 +63,7 @@
 [ ] 后续绑定域名和 HTTPS
 [x] 交接信息模板已创建：docs/HANDOVER_INFO_TEMPLATE.md
 [ ] 将交接信息通过可信渠道交给下一任负责人
-[ ] 后续优化：压缩大视频、补 favicon.ico、购买域名后配置 HTTPS
+[ ] 后续优化：部署 favicon.ico 到 VPS、压缩大视频、购买域名后配置 HTTPS
 ```
 
 当前结论：
@@ -123,7 +125,7 @@ Web 入口：Nginx 1.24.0
 ```text
 [ ] 绑定正式域名
 [ ] 配置 HTTPS
-[ ] 补 favicon.ico，消除浏览器控制台 favicon 404
+[x] 本地已补 favicon.ico，部署到 VPS 后可消除浏览器控制台 favicon 404
 [ ] 压缩较大的视频文件
 [ ] 后续可将视频迁移到 COS / OSS / CDN
 [ ] 将交接信息和密码通过可信渠道交给下一任负责人
@@ -197,9 +199,9 @@ node_modules
 
 ```text
 1. 购买域名或申请学院二级域名，然后配置 HTTPS。
-2. 压缩 highlight-video-12、highlight-video-13、highlight-video-14 等大视频。
+2. 压缩 highlight-video-12、highlight-video-13、highlight-video-14 等大视频，先生成网页播放版并保留原视频。
 3. 视访问量考虑将视频迁移到 COS / OSS / CDN。
-4. 补 favicon.ico。
+4. 将本地新增的 public/favicon.ico 同步到 VPS。
 5. 后续可为视频增加独立 poster 封面图。
 6. 建立定期备份制度，并把备份下载到本地或网盘。
 ```
@@ -693,7 +695,7 @@ sudo certbot renew --dry-run
 当前说明：
 
 ```text
-控制台出现 favicon.ico 404，不影响功能，后续可补网站图标。
+控制台出现 favicon.ico 404，不影响功能；本地已新增 public/favicon.ico，部署到 VPS 后应消失。
 视频可播放但仍受香港 VPS 20Mbps 带宽影响，后续建议压缩大视频或迁移 COS/OSS/CDN。
 ```
 

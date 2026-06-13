@@ -1165,7 +1165,7 @@ export function createDefaultSiteData() {
         date: "2026-05-16",
         source: "/assets/gallery/team-photos/team-photo-6.webp",
         image: "/assets/gallery/team-photos/team-photo-6.webp",
-        caption: "赛后队伍合影，补全这一组比赛纪念素材。"
+        caption: "赛后队伍合影，记录比赛日结束后的团队纪念时刻。"
       },
       {
         id: "gallery-5",
@@ -1175,7 +1175,7 @@ export function createDefaultSiteData() {
         date: "2026-06-03",
         source: "/assets/gallery/training/training-video-1.mp4",
         image: "",
-        caption: "日常训练视频素材，记录训练中的动作和节奏。"
+        caption: "日常训练视频，记录训练中的动作细节和队伍节奏。"
       },
       {
         id: "gallery-6",
@@ -1255,7 +1255,7 @@ export function createDefaultSiteData() {
         date: "2026-06-03",
         source: "/assets/gallery/life/life-video-1.mp4",
         image: "",
-        caption: "球队生活视频素材，记录场下日常和队伍氛围。"
+        caption: "球队生活视频，记录场下日常和队伍氛围。"
       },
       {
         id: "gallery-8",
