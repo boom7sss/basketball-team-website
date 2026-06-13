@@ -92,6 +92,23 @@ ffmpeg -i input.mp4 -vf "scale='min(1280,iw)':-2" -c:v libx264 -crf 26 -preset m
 
 回滚方式：保留原视频不删除；如果网页播放版效果不好，把后台路径改回原文件即可。
 
+线上已完成的视频压缩和切换记录见：
+
+```text
+docs/VIDEO_OPTIMIZATION_LOG.md
+```
+
+当前已切换到网页播放版的视频包括：
+
+```text
+highlight-video-2
+highlight-video-9
+highlight-video-11
+highlight-video-12
+highlight-video-13
+highlight-video-14
+```
+
 ## 图片加载速度
 
 本地 `public/assets` 图片均为 WebP，未发现 JPG/PNG/GIF/SVG 混入部署图片目录。
