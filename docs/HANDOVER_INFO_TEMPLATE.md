@@ -57,6 +57,7 @@ SESSION_SECRET 交接方式：通过可信渠道交接
 生活视频目录：/var/www/basketball-team-website/public/assets/gallery/life
 备份文件位置：~/basketball-backups
 最近一次备份：~/basketball-backups/basketball-site-2026-06-13.tar.gz
+自动备份说明：docs/BACKUP_AUTOMATION.md
 ```
 
 重要提醒：
@@ -170,6 +171,20 @@ tar -czf ~/basketball-backups/basketball-site-$(date +%F).tar.gz \
   /var/www/basketball-team-website/public/assets/gallery/highlights/videos \
   /var/www/basketball-team-website/public/assets/gallery/training/*.mp4 \
   /var/www/basketball-team-website/public/assets/gallery/life/*.mp4
+```
+
+自动备份：
+
+```bash
+cd /var/www/basketball-team-website
+chmod +x scripts/backup-runtime.sh
+scripts/backup-runtime.sh
+```
+
+配置每日自动备份和恢复方式见：
+
+```text
+docs/BACKUP_AUTOMATION.md
 ```
 
 检查视频文件：
