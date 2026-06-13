@@ -62,6 +62,7 @@
 ```text
 [ ] 后续绑定域名和 HTTPS
 [x] 交接信息模板已创建：docs/HANDOVER_INFO_TEMPLATE.md
+[x] 域名与 HTTPS 后续 TODO 已创建：docs/DOMAIN_HTTPS_TODO.md
 [ ] 将交接信息通过可信渠道交给下一任负责人
 [ ] 后续优化：部署 favicon.ico 到 VPS、压缩大视频、购买域名后配置 HTTPS
 ```
@@ -204,6 +205,15 @@ node_modules
 4. 将本地新增的 public/favicon.ico 同步到 VPS。
 5. 后续可为视频增加独立 poster 封面图。
 6. 建立定期备份制度，并把备份下载到本地或网盘。
+```
+
+域名责任建议：
+
+```text
+优先申请学院或学校二级域名。
+如果购买商业域名，建议由下一任长期负责人、球队公共账号或学院老师账号持有。
+不建议把官网域名长期绑定在即将毕业同学的个人账号下。
+详细步骤见 docs/DOMAIN_HTTPS_TODO.md。
 ```
 
 ### 收尾建议
