@@ -1,5 +1,7 @@
 # 运行与部署说明
 
+日常交接优先阅读 `docs/HANDOVER.md`。本文是通用运行与部署说明，当前线上状态以 `docs/HANDOVER.md` 和 `docs/HK_VPS_DEPLOYMENT_CHECKLIST.md` 为准。
+
 ## 本地运行
 
 最简单方式：
@@ -19,11 +21,7 @@
 - 官网：http://localhost:3000
 - 后台：http://localhost:3000/admin
 
-默认后台密码：
-
-```text
-team-admin-2026
-```
+本地开发环境如果没有设置 `ADMIN_PASSWORD`，会使用本地兜底密码。正式线上密码以服务器环境变量为准，并通过可信渠道交接。
 
 停止本地官网：
 

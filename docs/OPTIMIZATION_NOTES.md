@@ -1,5 +1,7 @@
 # 线上优化记录
 
+日常交接优先阅读 `docs/HANDOVER.md`。本文是线上优化阶段记录，不是日常维护入口。
+
 更新时间：2026-06-14
 
 本文记录香港 VPS 基础部署完成后的性能、交付和上线观感优化。本文不记录真实 `ADMIN_PASSWORD`、`SESSION_SECRET`、服务器登录密码或 SSH 私钥。
@@ -175,7 +177,7 @@ highlight-video-14
 - `GET /api/site` 返回 200，并带 `Cache-Control: no-store`。
 - `/assets/` 图片返回 200，并带约 30 天缓存。
 - 视频 Range 请求返回 `206 Partial Content`，支持分段加载和拖动播放。
-- `/favicon.ico` 当前线上仍为 404，待把本次新增文件部署到 VPS 后修复。
+- `/favicon.ico` 已部署到线上，当前返回 200。
 
 当前策略合理：
 
@@ -194,7 +196,7 @@ highlight-video-14
 public/favicon.ico
 ```
 
-部署到 VPS 后，浏览器控制台的 `/favicon.ico` 404 应消失。若部署后仍是 404，检查 Nginx 是否把根路径请求正确转发给 Node，或是否需要单独添加：
+当前 `public/favicon.ico` 已部署到 VPS，浏览器请求 `/favicon.ico` 返回 200。若后续迁移后再次出现 404，检查 Nginx 是否把根路径请求正确转发给 Node，或是否需要单独添加：
 
 ```nginx
 location = /favicon.ico {

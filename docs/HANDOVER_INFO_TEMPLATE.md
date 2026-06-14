@@ -1,254 +1,168 @@
-# 官网交接信息模板
+# 官网交接信息填写模板
 
-这份模板用于交接给下一任负责人。请不要在本文档中写入真实密码、`SESSION_SECRET`、服务器登录密码或 GitHub 私钥。密码和密钥只通过可信渠道交接。
+本文用于实际交接时填写。请不要在本文档中写入真实密码、`SESSION_SECRET`、服务器登录密码、SSH 私钥、云服务账号密码或域名账号密码。
+
+密码、密钥和账号密码只通过可信渠道交接。
 
 ## 基本信息
 
 ```text
-网站访问地址：http://43.129.197.63
-GitHub 仓库地址：https://github.com/boom7sss/basketball-team-website.git
-VPS 服务商：腾讯云轻量应用服务器
-服务器地域：中国香港 / 香港二区
-公网 IP：43.129.197.63
-续费时间：待填写
+网站地址：
+后台登录地址：
+GitHub 仓库地址：
+项目当前状态：
+交接日期：
 ```
 
-## 服务器登录
+## VPS 信息
 
 ```text
-服务器登录方式：SSH 登录，ubuntu 用户
+VPS 服务商：
+服务器地区：
+公网 IP：
+操作系统：
+服务器配置：
+服务器账号持有人：
+服务器续费时间：
+服务器控制台地址：
+```
+
+服务器登录信息：
+
+```text
+SSH 登录用户：
+SSH 登录方式：密码 / SSH 私钥 / 其他
 服务器登录密码：通过可信渠道交接
-SSH 私钥：如使用密钥登录，通过可信渠道交接
+SSH 私钥：通过可信渠道交接
 ```
 
 ## 项目部署
 
 ```text
-项目部署目录：/var/www/basketball-team-website
-pm2 服务名：basketball-team-website
-Nginx 配置路径：/etc/nginx/sites-available/basketball-team-website
-Nginx 启用配置路径：/etc/nginx/sites-enabled/basketball-team-website
-服务器环境变量文件：/etc/basketball-team-website.env
+部署目录：
+Node 版本：
+npm 版本：
+pm2 服务名：
+Nginx 配置路径：
+Nginx 启用配置路径：
+环境变量文件路径：
+```
+
+敏感环境变量交接：
+
+```text
+ADMIN_PASSWORD：通过可信渠道交接
+SESSION_SECRET：通过可信渠道交接
 ```
 
 ## 后台管理
 
 ```text
-后台登录地址：http://43.129.197.63/admin
-后台管理员账号说明：当前为单管理员密码模式，没有多账号系统
-ADMIN_PASSWORD 交接方式：通过可信渠道交接
-SESSION_SECRET 交接方式：通过可信渠道交接
+后台登录地址：
+后台管理员模式：单管理员密码 / 多账号系统 / 其他
+后台密码交接方式：通过可信渠道交接
+内容维护负责人：
+报名管理负责人：
 ```
 
-注意：
-
-- 不要把正式后台密码写进 GitHub、README、部署文档或公开群。
-- 负责人更换时，建议及时更换 `ADMIN_PASSWORD`。
-- 如果修改 `/etc/basketball-team-website.env`，需要重启 pm2 服务。
-
-## 运行时数据
+## 运行时数据和素材
 
 ```text
-数据文件位置：/var/www/basketball-team-website/data/site-data.json
-上线初始数据快照：/var/www/basketball-team-website/data/site-data.seed.json
-上传文件目录：/var/www/basketball-team-website/public/assets/uploads
-比赛视频目录：/var/www/basketball-team-website/public/assets/gallery/highlights/videos
-训练视频目录：/var/www/basketball-team-website/public/assets/gallery/training
-生活视频目录：/var/www/basketball-team-website/public/assets/gallery/life
-备份文件位置：~/basketball-backups
-最近一次完整备份：~/basketball-backups/basketball-site-2026-06-13.tar.gz
-自动备份文件：~/basketball-backups/basketball-auto-runtime-*.tar.gz
-自动备份说明：docs/BACKUP_AUTOMATION.md
+线上数据文件：
+上线初始数据快照：
+后台上传目录：
+比赛视频目录：
+训练视频目录：
+生活视频目录：
+原始素材归档位置：
 ```
 
-重要提醒：
-
-- `data/site-data.json` 是线上后台保存后的真实内容和报名数据。
-- `public/assets/uploads` 是后台上传文件目录。
-- 视频文件不在 Git 仓库里，换服务器时必须单独迁移视频目录。
-- 重新部署代码时，不要覆盖或删除线上 `data/site-data.json`。
-
-## 上线优化状态
+重要说明：
 
 ```text
-优化记录文档：docs/OPTIMIZATION_NOTES.md
-视频优化记录：docs/VIDEO_OPTIMIZATION_LOG.md
-自动备份说明：docs/BACKUP_AUTOMATION.md
-占位文案：已清理影像页残留占位文案
-favicon：已部署 public/favicon.ico，/favicon.ico 返回 200
-图片：部署图片均为 WebP，当前无需批量重压
-视频：重点大视频已生成网页播放版并切换，原视频保留
-Nginx 缓存：/assets/ 可缓存，/api/site 不缓存，视频 Range 返回 206
-自动备份：已启用，每天凌晨 3:30 执行
-HTTPS：暂未配置，等待域名或学院二级域名
+data/site-data.json 是线上后台保存后的真实内容和报名数据。
+public/assets/uploads 是后台上传文件目录。
+视频文件不进入 GitHub，迁移服务器时必须单独迁移。
 ```
 
-后续负责人如果继续处理视频，请保留原视频，只把后台或数据中的播放地址切换到压缩后的网页播放版。不要直接删除原视频。当前已切换的视频详见 `docs/VIDEO_OPTIMIZATION_LOG.md`。
-
-## 域名和 HTTPS
+## 备份信息
 
 ```text
-当前域名：暂未绑定
-域名注册商：待填写
-域名解析记录：待填写
-HTTPS 状态：暂未配置，当前使用 http://43.129.197.63
-证书工具：计划使用 certbot + nginx
-证书续期方式：待配置
-后续 TODO：docs/DOMAIN_HTTPS_TODO.md
+备份目录：
+自动备份脚本路径：
+自动备份执行时间：
+自动备份保留天数：
+最近一次手动备份文件：
+最近一次自动备份文件：
+异地备份保存位置：
+异地备份负责人：
 ```
 
-域名配置后，需要把域名 A 记录指向：
-
-```text
-43.129.197.63
-```
-
-建议：
-
-- 优先申请学院或学校二级域名。
-- 如果购买商业域名，应由下一任长期负责人、球队公共账号或学院老师账号持有，不建议继续绑定毕业生个人账号。
-- 域名续费时间、DNS 控制台和账号持有人必须交接清楚。
-- 当前服务器在中国香港，域名解析到该 VPS 通常不需要 ICP 备案；如果后续改用中国大陆服务器或大陆 CDN，需要重新确认备案要求。
-
-## 常见维护命令
-
-进入项目目录：
-
-```bash
-cd /var/www/basketball-team-website
-```
-
-查看网站进程：
-
-```bash
-pm2 status
-```
-
-查看网站日志：
-
-```bash
-pm2 logs basketball-team-website --lines 50
-```
-
-重启网站：
-
-```bash
-set -a
-. /etc/basketball-team-website.env
-set +a
-pm2 restart basketball-team-website --update-env
-```
-
-检查 Nginx 配置：
-
-```bash
-sudo nginx -t
-```
-
-重载 Nginx：
-
-```bash
-sudo systemctl reload nginx
-```
-
-更新代码：
-
-```bash
-cd /var/www/basketball-team-website
-git pull
-npm install
-npm run build
-npm test
-set -a
-. /etc/basketball-team-website.env
-set +a
-pm2 restart basketball-team-website --update-env
-```
-
-手动备份线上数据和素材：
-
-```bash
-mkdir -p ~/basketball-backups
-tar -czf ~/basketball-backups/basketball-site-$(date +%F).tar.gz \
-  /var/www/basketball-team-website/data/site-data.json \
-  /var/www/basketball-team-website/public/assets/uploads \
-  /var/www/basketball-team-website/public/assets/gallery/highlights/videos \
-  /var/www/basketball-team-website/public/assets/gallery/training/*.mp4 \
-  /var/www/basketball-team-website/public/assets/gallery/life/*.mp4
-```
-
-自动备份：
-
-```bash
-cd /var/www/basketball-team-website
-chmod +x scripts/backup-runtime.sh
-scripts/backup-runtime.sh
-```
-
-配置每日自动备份和恢复方式见：
+自动备份说明文档：
 
 ```text
 docs/BACKUP_AUTOMATION.md
 ```
 
-检查视频文件：
-
-```bash
-find /var/www/basketball-team-website/public/assets/gallery -type f \( -name "*.mp4" -o -name "*.mov" -o -name "*.webm" \)
-```
-
-检查后台数据文件：
-
-```bash
-ls -lh /var/www/basketball-team-website/data/site-data.json
-stat /var/www/basketball-team-website/data/site-data.json
-```
-
-## 常见问题
-
-### 后台保存后前台没变化
-
-先确认后台是否显示“已保存”。然后刷新前台页面。如果仍然不变，检查：
-
-```bash
-stat /var/www/basketball-team-website/data/site-data.json
-pm2 logs basketball-team-website --lines 50
-```
-
-### 视频播放慢
-
-当前视频直接放在香港 VPS 上。重点大视频已压缩并切换到网页播放版；如果后续访问量明显增加，再考虑对象存储 / CDN。
-
-### 浏览器控制台出现 favicon.ico 404
-
-如果服务器还没有同步最新代码，这是网站小图标缺失，不影响访问和后台功能。最新本地代码已新增 `public/favicon.ico`，部署到 VPS 后应消失。
-
-### 服务器重启后网站打不开
-
-检查 pm2：
-
-```bash
-pm2 status
-pm2 resurrect
-pm2 save
-```
-
-检查 Nginx：
-
-```bash
-sudo systemctl status nginx
-sudo nginx -t
-```
-
-## 紧急联系人
+## 域名和 HTTPS
 
 ```text
-技术负责人姓名：待填写
-技术负责人联系方式：待填写
-球队负责人姓名：待填写
-球队负责人联系方式：待填写
-服务器账号持有人：待填写
-GitHub 仓库管理员：待填写
+当前域名：
+域名注册商：
+域名账号持有人：
+域名续费时间：
+DNS 控制台地址：
+域名解析记录：
+HTTPS 状态：
+HTTPS 证书工具：
+证书续期方式：
+最近一次证书续期测试结果：
 ```
 
-密码、密钥、后台密码、服务器登录密码请通过可信渠道交接，不要写在本文档中。
+如果暂未绑定域名，请填写：
+
+```text
+当前域名：暂未绑定
+HTTPS 状态：暂未配置
+后续处理文档：docs/DOMAIN_HTTPS_TODO.md
+```
+
+## 负责人联系方式
+
+```text
+技术负责人姓名：
+技术负责人联系方式：
+球队负责人姓名：
+球队负责人联系方式：
+内容维护负责人姓名：
+内容维护负责人联系方式：
+报名管理负责人姓名：
+报名管理负责人联系方式：
+服务器账号持有人：
+GitHub 仓库管理员：
+域名账号持有人：
+```
+
+## 交接确认
+
+```text
+[ ] 网站首页可以访问
+[ ] 后台页面可以访问
+[ ] 后台密码已通过可信渠道交接
+[ ] 后台保存方式已演示
+[ ] 后台上传方式已演示
+[ ] 报名管理位置已说明
+[ ] 备份目录已说明
+[ ] 手动备份方式已说明
+[ ] 自动备份任务已说明
+[ ] GitHub 仓库权限已交接
+[ ] VPS 续费时间已说明
+[ ] 域名/HTTPS 当前状态已说明
+[ ] 不应提交到 GitHub 的内容已说明
+```
+
+## 备注
+
+```text
+其他需要交接的事项：
+```

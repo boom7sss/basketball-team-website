@@ -1,252 +1,234 @@
-# 网站维护交接说明
+# 最终交接总入口
 
-这份文档给后续篮球队负责人使用。日常维护不需要改代码，主要进入后台修改内容。
+这份文档是篮球队官网交接时的第一入口。后续负责人日常维护网站，优先看本文；只有遇到具体运维、备份、域名或部署问题时，再打开其他专项文档。
 
-## 后台怎么进
+本文不记录真实后台密码、服务器登录密码、`ADMIN_PASSWORD`、`SESSION_SECRET` 或 SSH 私钥。所有密码和密钥只通过可信渠道交接。
 
-本地测试地址：
+## 一句话状态
 
-```text
-http://localhost:3000/admin
-```
+官网已经上线到香港 VPS，前台、后台、上传、视频播放、Nginx 缓存和自动备份均已完成验证。当前还没有绑定正式域名和 HTTPS，但不阻塞通过公网 IP 使用。
 
-正式上线后，请使用部署后的域名加 `/admin`。
-
-后台密码由服务器环境变量设置。不要把正式密码发到公开群，也不要写进网站文件。
-
-## 推荐上线方案
-
-如果不做 ICP 备案，又希望国内用户能直接访问，当前推荐：
+## 访问入口
 
 ```text
-香港 VPS + Ubuntu Server + Node.js + pm2 + Nginx + HTTPS
+网站访问地址：http://43.129.197.63
+后台登录地址：http://43.129.197.63/admin
+GitHub 仓库：https://github.com/boom7sss/basketball-team-website.git
 ```
 
-这个方案适合毕业前快速上线，也方便毕业后交给学弟维护：
+后台密码通过可信渠道交接。不要把后台密码发到公开群，也不要写进 GitHub、README、文档或网页内容。
 
-- 不需要大陆 ICP 备案。
-- 国内访问一般比新加坡、欧美平台更稳。
-- 不需要改造现有后台。
-- 后台保存的数据可以长期写入服务器上的 `data/site-data.json`。
-- 后台上传的图片可以长期保存在 `public/assets/uploads/`。
-- 大视频继续不进 Git，单独上传到服务器对应目录。
-
-备选方案：
-
-- 学校已有服务器或学院二级域名：如果学院愿意提供，并允许运行 Node 服务，这是长期最正规方案；需要先找学院信息化负责人确认。
-- 新加坡 VPS：免备案，可作为香港 VPS 的备选，但国内访问通常更依赖线路质量。
-- Render / Railway：可以跑 Node，但必须配置持久磁盘或 Volume，否则后台保存和上传文件可能丢失。
-- Vercel / Cloudflare Pages：当前版本不推荐。除非以后把后台改成外部数据库和对象存储，否则不能保证后台内容持久保存。
-
-技术负责人交接时请把这些信息单独交给下一任负责人：
+## 当前线上信息
 
 ```text
-服务器厂商：
-服务器公网 IP：
-SSH 登录用户：
-项目目录：
-PM2 应用名：
-Nginx 配置文件位置：
-域名：
-后台地址：
-备份位置：
+VPS 服务商：腾讯云轻量应用服务器
+服务器地区：中国香港 / 香港二区
+公网 IP：43.129.197.63
+操作系统：Ubuntu 24.04 LTS
+部署目录：/var/www/basketball-team-website
+pm2 服务名：basketball-team-website
+Nginx 配置路径：/etc/nginx/sites-available/basketball-team-website
+环境变量文件：/etc/basketball-team-website.env
+备份目录：~/basketball-backups
 ```
 
-不要把正式后台密码和 `SESSION_SECRET` 写进这份文档。它们只应该放在服务器环境变量或队内可信密码管理渠道里。
+服务器登录密码、SSH 私钥、后台密码、`SESSION_SECRET` 通过可信渠道交接。
 
-## 修改后一定要保存
+## 日常怎么维护内容
 
-后台里改完内容后，需要点击：
+日常维护不需要改代码，进入后台即可。
+
+后台修改内容后，必须点击：
 
 ```text
 保存全部
 ```
 
-没有点击保存，前台不会更新。
+常用维护位置：
 
-## 招新 QQ 群怎么改
+- 队员阵容：更新队员、照片、号码、位置、年级、状态。
+- 赛程战绩：更新比赛时间、地点、比分和结果。
+- 新闻动态：发布新闻、封面、轮播图和正文。
+- 影像中心：维护比赛照片、比赛视频、训练、生活类素材。
+- 招新信息：更新招新 QQ 群、流程、要求和 FAQ。
+- 报名管理：查看报名，修改处理状态，写备注，删除无效报名。
+- 球队资料：维护联系人、电话、邮箱、训练地点等信息。
 
-进入后台：
-
-```text
-招新信息 -> 咨询说明
-```
-
-填写类似：
-
-```text
-请加入招新QQ群：123456789，入群备注“姓名+年级+专业”。
-```
-
-报名同学提交成功后，会看到一个明显弹窗，弹窗里显示这段文字。
-
-注意：网站不会自动通知负责人。负责人仍需要定期进入“报名管理”查看报名信息。
-
-## 查看报名信息
-
-进入后台：
+更细的后台维护说明见：
 
 ```text
-报名管理
+docs/CONTENT_MANAGEMENT.md
 ```
 
-可以做这些事：
+## 图片和视频怎么维护
 
-- 查看球员报名和运营报名。
-- 修改处理状态。
-- 写负责人备注。
-- 删除无效报名。
+图片：
 
-建议招新期间每天固定查看，训练前再检查一次。
+- 后台有“上传”按钮时，直接上传图片。
+- 图片会自动转成 WebP。
+- 上传后仍要点击“保存全部”。
+- 不要填写电脑本地路径，例如 `D:\...`。
 
-## 更新队员
+视频：
 
-进入后台：
-
-```text
-队员阵容
-```
-
-可以修改姓名、号码、位置、年级、专业、身高、简介、详细介绍、照片地址等。
-
-如果队员毕业，可以把“队员状态”改成：
-
-```text
-退役
-```
-
-退役队员仍会展示，但会排在现役队员后面。
-
-## 更新赛程和比分
-
-进入后台：
-
-```text
-赛程战绩
-```
-
-未比赛时：
-
-```text
-状态填 upcoming
-结果填 未开赛
-```
-
-已比赛后：
-
-```text
-状态填 finished
-结果填 胜 / 负
-补上我方得分、对方得分和摘要
-```
-
-## 更新新闻
-
-进入后台：
-
-```text
-新闻动态
-```
-
-可以填写标题、分类、日期、封面、轮播照片、摘要和正文。
-
-新闻列表和首页近期动态会显示排序靠前的新闻。新闻详情页会显示正文和轮播照片。
-
-## 更新图片
-
-后台里看到“上传”按钮时，可以直接上传图片。
-
-图片上传后会自动转成适合网页的 `.webp`，后台会自动填入地址。上传后还要点击“保存全部”。
-
-不要填写电脑本地路径，例如：
-
-```text
-D:\球队网站\图片\xxx.jpg
-```
-
-网站需要的是这种路径：
-
-```text
-/assets/news/news-1.webp
-```
-
-## 更新视频
-
-视频可以在后台上传，但视频通常比较大。推荐方式是：
-
-1. 把视频单独上传到服务器对应目录。
-2. 在后台“影像中心”填写视频地址。
-3. 点击“保存全部”。
+- 后台支持上传视频，但大视频更建议先压缩成网页播放版。
+- 视频文件不进 GitHub，换服务器时必须单独迁移。
+- 重点大视频已切换到 `-web.mp4` 网页播放版，原视频保留。
+- 新增大视频时，优先压缩后再上线，避免服务器带宽压力过大。
 
 常用视频目录：
 
 ```text
-public/assets/gallery/highlights/videos
-public/assets/gallery/training
-public/assets/gallery/life
+/var/www/basketball-team-website/public/assets/gallery/highlights/videos
+/var/www/basketball-team-website/public/assets/gallery/training
+/var/www/basketball-team-website/public/assets/gallery/life
 ```
 
-后台填写时使用：
+后台填写时使用网站路径，例如：
 
 ```text
-/assets/gallery/highlights/videos/highlight-video-1.mp4
+/assets/gallery/highlights/videos/highlight-video-12-web.mp4
 ```
 
-视频文件没有进入 Git 仓库。如果换服务器或重新部署，记得单独上传视频。
-
-## 更新首页展示球员
-
-进入后台：
+视频压缩和已切换记录见：
 
 ```text
-首页模块 -> 队员风采板块
+docs/VIDEO_OPTIMIZATION_LOG.md
 ```
 
-选择首页展示球员 1、2、3，然后保存。
+## 备份机制
 
-## 更新联系方式
-
-进入后台：
+自动备份脚本已经启用：
 
 ```text
-球队资料
+scripts/backup-runtime.sh
 ```
 
-可以修改联系人、电话、邮箱和地点。
-
-## 什么不要随便动
-
-不要删除这些目录里的素材：
-
-```text
-public/assets
-球员照片
-影像素材
-```
-
-不要把正式后台密码或 `SESSION_SECRET` 写进任何文档或代码。
-
-不要直接修改后台字段结构。如果需要新增后台栏目、改页面结构或改导航，建议找技术负责人处理。
-
-## 上线后备份建议
-
-线上后台修改后的真实内容在：
+默认备份：
 
 ```text
 data/site-data.json
+public/assets/uploads
+public/assets/gallery/**/*-web.mp4
 ```
 
-后台上传的新图片和视频通常在：
+备份目录：
 
 ```text
-public/assets/uploads/
+~/basketball-backups
 ```
 
-建议定期备份这两处：
+自动备份说明：
 
 ```text
-data/site-data.json
-public/assets/uploads/
+每天凌晨 3:30 通过 crontab 执行
+默认保留 14 天
+手动备份已验证通过
 ```
 
-`data/site-data.json` 记录后台保存后的最新内容和报名信息。`public/assets/uploads/` 记录后台上传的素材。如果换服务器或重新部署，不要只拉 Git 仓库，还要把这两处运行时数据一起迁移。
+重要提醒：
+
+- 自动备份仍在同一台 VPS 上，不能替代异地备份。
+- 建议每月下载一份最新备份到本地电脑、网盘或学院资料盘。
+- 换服务器时，必须迁移 `data/site-data.json`、`public/assets/uploads` 和视频文件。
+
+详细说明见：
+
+```text
+docs/BACKUP_AUTOMATION.md
+```
+
+## 常见问题处理
+
+后台保存后前台没变化：
+
+1. 确认后台出现保存成功提示。
+2. 刷新前台页面。
+3. 如仍异常，让技术负责人查看 `data/site-data.json` 更新时间和 pm2 日志。
+
+视频打不开或拖不动：
+
+1. 确认视频文件在服务器同路径存在。
+2. 确认后台填写的是 `/assets/...` 开头的网站路径。
+3. 让技术负责人检查视频 Range 是否返回 `206 Partial Content`。
+
+网站打不开：
+
+1. 先访问 `http://43.129.197.63`。
+2. 检查 pm2 是否 online。
+3. 检查 Nginx 是否正常。
+4. 查看 pm2 和 Nginx 日志。
+
+后台登录不了：
+
+1. 确认使用的是通过可信渠道交接的正式后台密码。
+2. 确认网站服务在线。
+3. 如果刚改过 `/etc/basketball-team-website.env`，需要重启 pm2 服务。
+
+服务器重启后网站打不开：
+
+1. 检查 pm2 状态。
+2. 尝试 `pm2 resurrect`。
+3. 检查 Nginx 状态。
+
+常用命令见：
+
+```text
+docs/OPS_COMMANDS.md
+```
+
+## 后续 TODO
+
+不阻塞当前使用的事项：
+
+- 绑定正式域名。
+- 配置 HTTPS。
+- 每月下载一次异地备份。
+- 稳定观察一段时间后，再决定是否归档或清理服务器上的原始大视频。
+- 访问量明显增加后，再考虑把视频迁移到 COS / OSS / CDN。
+- 长期运营时，可增加后台多账号和权限分级。
+- 负责人更换时，及时更换后台密码，并重新确认备份、域名续费和服务器续费。
+
+域名和 HTTPS 操作见：
+
+```text
+docs/DOMAIN_HTTPS_TODO.md
+```
+
+## 交接时必须确认
+
+实际交接时，请按下面模板填写：
+
+```text
+docs/HANDOVER_INFO_TEMPLATE.md
+```
+
+需要当面或通过可信渠道交接：
+
+- 后台正式密码。
+- 服务器登录方式。
+- SSH 私钥或登录密码。
+- GitHub 仓库管理权限。
+- 腾讯云账号归属和续费信息。
+- 未来域名账号、DNS 权限和续费信息。
+
+不要把这些密码、密钥、账号密码写进本文档或提交到 GitHub。
+
+## 文档地图
+
+优先阅读：
+
+- `docs/HANDOVER.md`：最终交接总入口。
+- `docs/HANDOVER_INFO_TEMPLATE.md`：实际交接填写模板。
+- `docs/OPS_COMMANDS.md`：常用运维命令。
+- `docs/CONTENT_MANAGEMENT.md`：后台内容维护。
+- `docs/BACKUP_AUTOMATION.md`：自动备份和恢复。
+- `docs/DOMAIN_HTTPS_TODO.md`：域名和 HTTPS 后续事项。
+
+专项记录：
+
+- `docs/HK_VPS_DEPLOYMENT_CHECKLIST.md`：上线过程清单。
+- `docs/OPTIMIZATION_NOTES.md`：上线优化记录。
+- `docs/VIDEO_OPTIMIZATION_LOG.md`：视频压缩记录。
+- `docs/DEPLOYMENT.md`、`docs/VPS_DEPLOYMENT.md`：部署说明。
+- `docs/PROJECT_CONTEXT.md`、`docs/CHANGELOG.md`：项目背景和历史记录。
