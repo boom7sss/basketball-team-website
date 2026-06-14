@@ -16,12 +16,13 @@
 
 后续负责人建议按下面顺序阅读：
 
-1. `docs/HANDOVER.md`：最终交接总入口，非技术负责人优先看这里。
-2. `docs/HANDOVER_INFO_TEMPLATE.md`：实际交接时填写服务器、仓库、域名、负责人等信息。
-3. `docs/OPS_COMMANDS.md`：网站异常、重启、日志、备份等常用运维命令。
-4. `docs/CONTENT_MANAGEMENT.md`：日常后台内容维护说明。
-5. `docs/BACKUP_AUTOMATION.md`：自动备份和恢复方式。
-6. `docs/DOMAIN_HTTPS_TODO.md`：后续绑定域名和配置 HTTPS。
+1. `docs/DOCUMENTS_GUIDE.md`：文档导航，先看它来判断哪些文档必读、哪些按需读。
+2. `docs/HANDOVER.md`：最终交接总入口，非技术负责人优先看这里。
+3. `docs/HANDOVER_INFO_TEMPLATE.md`：实际交接时填写服务器、仓库、域名、负责人等信息。
+4. `docs/OPS_COMMANDS.md`：网站异常、重启、日志、备份等常用运维命令。
+5. `docs/CONTENT_MANAGEMENT.md`：日常后台内容维护说明。
+6. `docs/BACKUP_AUTOMATION.md`：自动备份和恢复方式。
+7. `docs/DOMAIN_HTTPS_TODO.md`：后续绑定域名和配置 HTTPS。
 
 专项记录可按需查阅：
 

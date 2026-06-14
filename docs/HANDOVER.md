@@ -218,6 +218,7 @@ docs/HANDOVER_INFO_TEMPLATE.md
 
 优先阅读：
 
+- `docs/DOCUMENTS_GUIDE.md`：下一届负责人文档导航，先看它判断每份文档什么时候读。
 - `docs/HANDOVER.md`：最终交接总入口。
 - `docs/HANDOVER_INFO_TEMPLATE.md`：实际交接填写模板。
 - `docs/OPS_COMMANDS.md`：常用运维命令。
