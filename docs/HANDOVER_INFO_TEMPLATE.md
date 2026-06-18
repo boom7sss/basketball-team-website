@@ -161,12 +161,16 @@ HTTPS 证书工具：计划使用 certbot + nginx
 
 ```text
 GitHub 仓库地址：https://github.com/boom7sss/basketball-team-website.git
+仓库可见性：建议保持私有；交接时添加下一任技术负责人为协作者，不需要公开仓库
 当前分支：master
 最近交接整理提交：final project handover consolidation
 仓库管理员：待填写
 服务器拉取方式：GitHub Deploy key
 Deploy key 权限：只读拉取；不要勾选 Allow write access
+代码交接方式：下一任技术负责人从 GitHub clone，不直接接收本地完整压缩包
 ```
+
+如果以后要把仓库改成公开作品集，先脱敏或移除公网 IP、服务器路径、Nginx 路径、备份目录、负责人联系方式、账号持有人、交接模板和内部运维细节。
 
 不能提交到 GitHub 的内容：
 
