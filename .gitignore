@@ -3,6 +3,9 @@ node_modules/
 .DS_Store
 *.log
 
+# 本地交接打包目录，不作为仓库内容提交
+/handover-package-*/
+
 # 本地原始素材库，不作为部署代码提交
 /球员照片/
 /影像素材/
